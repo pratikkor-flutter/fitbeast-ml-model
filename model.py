@@ -2540,11 +2540,14 @@ def recommend_plan(user_input_dict, kmeans_model, cluster_templates, X_train_raw
 
     # Most common metadata
     dominant_days = subset['workout_days'].mode()[0]
-    dominant_diet_type = subset['diet_type'].mode()[0]
-    dominant_level = subset['workout_level'].mode()[0]
+   #dominant_diet_type = subset['diet_type'].mode()[0]
+   #dominant_level = subset['workout_level'].mode()[0]
+
+    user_diet = user_input_dict['diet_type']
+    workout_level = user_input_dict['workout_level']
 
     # Cluster key
-    cluster_id = f"{dominant_days}_{dominant_diet_type}_{dominant_level}"
+    cluster_id = f"{dominant_days}_{user_diet}_{workout_level}"
     plan = cluster_templates.get(cluster_id, {
         'diet': {},
         'workout_activities': []
@@ -2562,7 +2565,7 @@ test_user = {
     'fitness_goal': 'Muscle Gain',
     'workout_days': 5,
     'workout_level': 'Intermediate',
-    'diet_type': 'Non-Veg'
+    'diet_type': 'Veg'
 }
 
 cluster_used, recommended_plan = recommend_plan(test_user, kmeans, cluster_templates, X_raw, y_clusters)
